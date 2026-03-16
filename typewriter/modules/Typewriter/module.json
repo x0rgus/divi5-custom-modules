@@ -11,25 +11,19 @@
         "default": "Typewriter\nText\nModule"
       },
       "typing_speed": {
-        "type": "number",
+        "type": "text",
         "label": "Typing Speed (ms)",
-        "default": 120,
-        "min": 10,
-        "max": 1000
+        "default": "120"
       },
       "pause_time": {
-        "type": "number",
+        "type": "text",
         "label": "Pause Time (ms)",
-        "default": 2000,
-        "min": 100,
-        "max": 5000
-      }
-    },
-    "design": {
-      "text": {
+        "default": "2000"
+      },
+      "text_color": {
         "type": "color-alpha",
         "label": "Text Color",
-        "selector": "%%order_class%%"
+        "default": "#333333"
       }
     }
   }

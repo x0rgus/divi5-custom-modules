@@ -6,7 +6,32 @@ class Divi_Typewriter extends ET_Builder_Module {
     public $vb_support = 'on';
 
     public function init() {
-        // Handled via module.json
+        $this->name = esc_html__( 'Typewriter Text', 'divi-typewriter' );
+    }
+
+    public function get_fields() {
+        return array(
+            'words' => array(
+                'label'           => esc_html__( 'Words', 'divi-typewriter' ),
+                'type'            => 'textarea',
+                'option_category' => 'basic_option',
+            ),
+            'typing_speed' => array(
+                'label'           => esc_html__( 'Typing Speed', 'divi-typewriter' ),
+                'type'            => 'text',
+                'option_category' => 'basic_option',
+            ),
+            'pause_time' => array(
+                'label'           => esc_html__( 'Pause Time', 'divi-typewriter' ),
+                'type'            => 'text',
+                'option_category' => 'basic_option',
+            ),
+            'text_color' => array(
+                'label'           => esc_html__( 'Text Color', 'divi-typewriter' ),
+                'type'            => 'color-alpha',
+                'option_category' => 'configuration',
+            ),
+        );
     }
 
     /**
@@ -14,13 +39,14 @@ class Divi_Typewriter extends ET_Builder_Module {
      */
     public function render( $attrs, $content = null, $render_slug ) {
 
-        // Defensive checks for D5 attributes
-        $words = isset( $attrs['words'] ) ? explode( "\n", (string) $attrs['words'] ) : [];
-        $speed = isset( $attrs['typing_speed'] ) ? (int) $attrs['typing_speed'] : 120;
-        $pause = isset( $attrs['pause_time'] ) ? (int) $attrs['pause_time'] : 2000;
-        $color = isset( $attrs['text_color'] ) ? (string) $attrs['text_color'] : '';
+        // Use $this->props for legacy compatibility if $attrs is empty
+        $props = ! empty( $attrs ) ? $attrs : $this->props;
 
-        // Prevent frontend script loading in Visual Builder to avoid conflicts
+        $words = isset( $props['words'] ) ? explode( "\n", (string) $props['words'] ) : [];
+        $speed = isset( $props['typing_speed'] ) ? (int) $props['typing_speed'] : 120;
+        $pause = isset( $props['pause_time'] ) ? (int) $props['pause_time'] : 2000;
+        $color = isset( $props['text_color'] ) ? (string) $props['text_color'] : '';
+
         if ( ! is_admin() ) {
             wp_enqueue_script(
                 'divi-typewriter-js',
