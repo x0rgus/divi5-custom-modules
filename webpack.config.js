@@ -1,9 +1,10 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
-    index: './src/index.js',
+    bundle: './src/index.js',
   },
   output: {
     filename: '[name].js',
@@ -11,6 +12,8 @@ module.exports = {
   },
   externals: {
     jquery: 'jQuery',
+    underscore: '_',
+    lodash: 'lodash',
     react: ['vendor', 'React'],
     'react-dom': ['vendor', 'ReactDOM'],
     '@wordpress/i18n': ['vendor', 'wp', 'i18n'],
@@ -19,42 +22,94 @@ module.exports = {
     '@divi/data': ['divi', 'data'],
     '@divi/module': ['divi', 'module'],
     '@divi/module-utils': ['divi', 'moduleUtils'],
+    '@divi/modal': ['divi', 'modal'],
+    '@divi/field-library': ['divi', 'fieldLibrary'],
+    '@divi/icon-library': ['divi', 'iconLibrary'],
     '@divi/module-library': ['divi', 'moduleLibrary'],
+    '@divi/style-library': ['divi', 'styleLibrary'],
   },
   module: {
     rules: [
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: [
-              ['@babel/preset-env', { targets: "> 5%" }],
-              '@babel/preset-react'
-            ],
-            plugins: [
-              '@babel/plugin-proposal-class-properties',
-            ]
+        use: [
+          {
+            loader: 'thread-loader',
+            options: {
+              workers: -1,
+            },
+          },
+          {
+            loader: 'babel-loader',
+            options: {
+              compact: false,
+              presets: [
+                ['@babel/preset-env', { modules: false, targets: "> 5%" }],
+                '@babel/preset-react'
+              ],
+              plugins: [
+                '@babel/plugin-proposal-class-properties',
+              ],
+              cacheDirectory: false,
+            }
           }
-        }
+        ]
       },
       {
         test: /\.s?css$/i,
         use: [
           MiniCssExtractPlugin.loader,
-          'css-loader',
-          'sass-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              url: false,
+              importLoaders: 2,
+            },
+          },
+          {
+            loader: 'sass-loader',
+            options: {},
+          },
         ],
       }
     ]
   },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vb: {
+          type: 'css/mini-extract',
+          test: /[\\/]style(\.module)?\.(sc|sa|c)ss$/,
+          chunks: 'all',
+          enforce: true,
+          name(_, chunks, cacheGroupKey) {
+            const chunkName = chunks[0].name;
+            return `${path.dirname(chunkName)}/${cacheGroupKey}-${path.basename(chunkName)}`;
+          },
+        },
+        default: false,
+      },
+    },
+  },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: '[name].css',
-    })
+      filename: '../assets/css/[name].css',
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: '**/module.json',
+          context: 'src/modules',
+          to: path.resolve(__dirname, 'typewriter/modules'),
+        }
+      ]
+    }),
   ],
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
-  }
+  },
+  stats: {
+    errorDetails: true,
+  },
 };
