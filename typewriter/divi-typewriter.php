@@ -19,7 +19,7 @@ add_action( 'divi_visual_builder_assets_before_enqueue_scripts', function() {
                 'version' => '1.0.0',
                 'script'  => array(
                     'src'                => plugin_dir_url( __FILE__ ) . 'build/index.js',
-                    'deps'               => array( 'divi-module-library', 'divi-vendor-wp-hooks' ),
+                    'deps'               => array(), // <-- APAGUE OS NOMES E DEIXE VAZIO!
                     'enqueue_app_window' => true,
                 ),
             )
