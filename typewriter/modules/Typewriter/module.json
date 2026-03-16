@@ -1,0 +1,36 @@
+{
+  "slug": "divi_typewriter",
+  "name": "Typewriter Text",
+  "type": "module",
+  "settings": {
+    "content": {
+      "words": {
+        "type": "textarea",
+        "label": "Words",
+        "description": "One word per line",
+        "default": "Typewriter\nText\nModule"
+      },
+      "typing_speed": {
+        "type": "number",
+        "label": "Typing Speed (ms)",
+        "default": 120,
+        "min": 10,
+        "max": 1000
+      },
+      "pause_time": {
+        "type": "number",
+        "label": "Pause Time (ms)",
+        "default": 2000,
+        "min": 100,
+        "max": 5000
+      }
+    },
+    "design": {
+      "text": {
+        "type": "color-alpha",
+        "label": "Text Color",
+        "selector": "%%order_class%%"
+      }
+    }
+  }
+}
