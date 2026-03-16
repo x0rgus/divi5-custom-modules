@@ -3,7 +3,7 @@
  * Plugin Name: Divi 5 Typewriter Module (Custom)
  * Description: typewriter text module for Divi 5.
  * Version: 0.1
- * Author: Lucas Procópio (lucas.pr1@hotmail.com)
+ * Author: Lucas Procópio (lucas.pr1@hotmail.com).
  * Update URI: false
  */
 
