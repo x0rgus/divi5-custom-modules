@@ -4,15 +4,23 @@
   "description": "Divi 5 Custom Modules Workspace",
   "main": "index.js",
   "scripts": {
-    "start": "wp-env start",
-    "stop": "wp-env stop",
-    "clean": "wp-env clean all",
-    "env:update": "wp-env start --update",
-    "build": "wp-scripts build",
-    "dev": "wp-scripts start"
+    "start": "NODE_ENV=development webpack -w --mode development --config webpack.config.js --progress",
+    "build": "NODE_ENV=production webpack --mode production --config webpack.config.js --progress",
+    "reset-install": "rm -rf ./package-lock.json ./node_modules/ && npm install"
   },
   "devDependencies": {
-    "@wordpress/env": "^10.0.0",
-    "@wordpress/scripts": "^30.0.0"
+    "@babel/core": "^7.29.0",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/preset-env": "^7.29.0",
+    "@babel/preset-react": "^7.28.5",
+    "babel-loader": "^10.1.1",
+    "copy-webpack-plugin": "^14.0.0",
+    "css-loader": "^7.1.4",
+    "mini-css-extract-plugin": "^2.10.1",
+    "sass": "^1.98.0",
+    "sass-loader": "^16.0.7",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.105.4",
+    "webpack-cli": "^7.0.1"
   }
 }
