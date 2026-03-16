@@ -14,23 +14,26 @@ class Divi_Typewriter extends ET_Builder_Module {
      */
     public function render( $attrs, $content = null, $render_slug ) {
 
-        $words = isset( $this->props['words'] ) ? explode( "\n", $this->props['words'] ) : [];
-        $speed = isset( $this->props['typing_speed'] ) ? $this->props['typing_speed'] : '120';
-        $pause = isset( $this->props['pause_time'] ) ? $this->props['pause_time'] : '2000';
-        $color = isset( $this->props['text_color'] ) ? $this->props['text_color'] : '';
+        $words = isset( $attrs['words'] ) ? explode( "\n", $attrs['words'] ) : [];
+        $speed = isset( $attrs['typing_speed'] ) ? $attrs['typing_speed'] : '120';
+        $pause = isset( $attrs['pause_time'] ) ? $attrs['typing_speed'] : '2000';
+        $color = isset( $attrs['text_color'] ) ? $attrs['text_color'] : '';
 
-        wp_enqueue_script(
-            'divi-typewriter-js',
-            plugin_dir_url( __FILE__ ) . '../../assets/js/typewriter.js',
-            [],
-            '1.0',
-            true
-        );
+        // Only enqueue frontend assets if NOT in Visual Builder (D5 VB handles it via React)
+        if ( ! is_admin() && ! function_exists( 'et_core_is_fb_enabled' ) || ! et_core_is_fb_enabled() ) {
+            wp_enqueue_script(
+                'divi-typewriter-js',
+                plugin_dir_url( __FILE__ ) . '../../assets/js/typewriter.js',
+                [],
+                '1.0',
+                true
+            );
 
-        wp_enqueue_style(
-            'divi-typewriter-css',
-            plugin_dir_url( __FILE__ ) . '../../assets/css/typewriter.css'
-        );
+            wp_enqueue_style(
+                'divi-typewriter-css',
+                plugin_dir_url( __FILE__ ) . '../../assets/css/typewriter.css'
+            );
+        }
 
         $style = $color ? "style='color:$color'" : "";
 

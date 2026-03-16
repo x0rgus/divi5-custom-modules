@@ -1,9 +1,9 @@
 <?php
 /**
  * Plugin Name: Divi 5 Typewriter Module (Custom)
- * Description: High-performance typewriter text module for Divi 5.
+ * Description: typewriter text module for Divi 5.
  * Version: 0.1
- * Author: Lucas Procópio
+ * Author: Lucas Procópio (lucas.pr1@hotmail.com)
  * Update URI: false
  */
 
@@ -31,7 +31,8 @@ add_action( 'et_builder_ready', 'divi_typewriter_register_extension' );
  */
 function divi_typewriter_vb_scripts() {
 
-    if ( ! function_exists( 'et_is_builder_plugin_active' ) ) {
+    // Only load in the Visual Builder
+    if ( ! function_exists( 'et_core_is_fb_enabled' ) || ! et_core_is_fb_enabled() ) {
         return;
     }
 
@@ -40,11 +41,14 @@ function divi_typewriter_vb_scripts() {
     if ( file_exists( $asset_file ) ) {
 
         $assets = include $asset_file;
+        
+        // Add 'divi-builder' as a dependency to ensure 'divi' object exists
+        $deps = array_merge( $assets['dependencies'], array( 'divi-builder' ) );
 
         wp_enqueue_script(
             'divi-typewriter-vb-script',
             plugin_dir_url( __FILE__ ) . 'build/index.js',
-            $assets['dependencies'],
+            $deps,
             $assets['version'],
             true
         );
