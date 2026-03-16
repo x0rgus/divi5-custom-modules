@@ -64,17 +64,20 @@ class Divi_Typewriter extends ET_Builder_Module {
 
         $style = $color ? "style='color:$color'" : "";
 
+        $first_word = !empty($words) ? esc_html($words[0]) : '';
+
         return sprintf(
             '<span class="divi-typewriter"
                 data-words=\'%s\'
                 data-speed="%s"
                 data-pause="%s"
                 %s
-            ></span>',
-            json_encode( $words ),
+            >%s</span>', 
+            wp_json_encode( $words ),
             esc_attr( $speed ),
             esc_attr( $pause ),
-            $style
+            $style,
+            $first_word 
         );
 
     }
