@@ -14,13 +14,14 @@ class Divi_Typewriter extends ET_Builder_Module {
      */
     public function render( $attrs, $content = null, $render_slug ) {
 
-        $words = isset( $attrs['words'] ) ? explode( "\n", $attrs['words'] ) : [];
-        $speed = isset( $attrs['typing_speed'] ) ? $attrs['typing_speed'] : '120';
-        $pause = isset( $attrs['pause_time'] ) ? $attrs['typing_speed'] : '2000';
-        $color = isset( $attrs['text_color'] ) ? $attrs['text_color'] : '';
+        // Defensive checks for D5 attributes
+        $words = isset( $attrs['words'] ) ? explode( "\n", (string) $attrs['words'] ) : [];
+        $speed = isset( $attrs['typing_speed'] ) ? (int) $attrs['typing_speed'] : 120;
+        $pause = isset( $attrs['pause_time'] ) ? (int) $attrs['pause_time'] : 2000;
+        $color = isset( $attrs['text_color'] ) ? (string) $attrs['text_color'] : '';
 
-        // Only enqueue frontend assets if NOT in Visual Builder (D5 VB handles it via React)
-        if ( ! is_admin() && ! function_exists( 'et_core_is_fb_enabled' ) || ! et_core_is_fb_enabled() ) {
+        // Prevent frontend script loading in Visual Builder to avoid conflicts
+        if ( ! is_admin() ) {
             wp_enqueue_script(
                 'divi-typewriter-js',
                 plugin_dir_url( __FILE__ ) . '../../assets/js/typewriter.js',
