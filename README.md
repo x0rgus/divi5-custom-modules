@@ -24,10 +24,11 @@ npm run start
 ```
 
 ## Cloning a Specific Plugin (Production)
-The production-ready plugin (including compiled build assets) is automatically maintained in the `dist` branch by GitHub Actions. 
+The production-ready plugin (including compiled build assets) is automatically maintained in the `dist` branch. 
 
-To install the `typewriter` plugin on a live WordPress site, for example:
+**Note**: To avoid conflicts with existing plugins in the WordPress repository, we recommend cloning into a custom folder like `divi5-typewriter`:
+
 ```bash
 cd wp-content/plugins
-git clone -b dist https://github.com/x0rgus/divi5-custom-modules.git typewriter
+git clone -b dist https://github.com/x0rgus/divi5-custom-modules.git divi5-typewriter
 ```

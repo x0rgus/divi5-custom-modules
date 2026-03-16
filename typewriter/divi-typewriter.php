@@ -1,9 +1,10 @@
 <?php
 /**
- * Plugin Name: Divi Typewriter Module (Divi 5)
- * Description: Simple typewriter text module for Divi 5.
+ * Plugin Name: Divi 5 Typewriter Module (Custom)
+ * Description: High-performance typewriter text module for Divi 5.
  * Version: 0.1
- * Author: Lucas Procópio (lucas.pr1@hotmail.com)
+ * Author: Lucas Procópio
+ * Update URI: false
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
