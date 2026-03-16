@@ -1,10 +1,9 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
-    bundle: './src/index.js',
+    index: './src/index.js',
   },
   output: {
     filename: '[name].js',
@@ -34,12 +33,6 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: [
-          {
-            loader: 'thread-loader',
-            options: {
-              workers: -1,
-            },
-          },
           {
             loader: 'babel-loader',
             options: {
@@ -95,16 +88,7 @@ module.exports = {
   plugins: [
     new MiniCssExtractPlugin({
       filename: '../assets/css/[name].css',
-    }),
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: '**/module.json',
-          context: 'src/modules',
-          to: path.resolve(__dirname, 'typewriter/modules'),
-        }
-      ]
-    }),
+    })
   ],
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
