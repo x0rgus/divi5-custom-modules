@@ -2,32 +2,33 @@
   "slug": "divi_typewriter",
   "name": "Typewriter Text",
   "type": "module",
+  "dynamic": true,
   "settings": {
-      "content": {
-        "words": {
-          "type": "textarea",
-          "label": "Words",
-          "description": "Enter the words you want to type out. Place each word or phrase on a new line.",
-          "default": "Typewriter\nText\nModule"
-        },
-        "typing_speed": {
-          "type": "text",
-          "label": "Typing Speed (ms)",
-          "description": "Set the typing speed in milliseconds. Lower numbers mean faster typing (e.g., 50 for fast, 120 for normal).",
-          "default": "120"
-        },
-        "pause_time": {
-          "type": "text",
-          "label": "Pause Time (ms)",
-          "description": "How long to wait before deleting the word and typing the next one (e.g., 2000 = 2 seconds).",
-          "default": "2000"
-        },
-        "text_color": {
-          "type": "color-alpha",
-          "label": "Text Color",
-          "description": "Choose the color of the animated typewriter text.",
-          "default": "#333333"
-        }
+    "content": {
+      "words": {
+        "type": "textarea",
+        "label": "Words",
+        "description": "Enter the words you want to type out. Place each word or phrase on a new line.",
+        "default": "Typewriter\nText\nModule"
+      },
+      "typing_speed": {
+        "type": "text",
+        "label": "Typing Speed (ms)",
+        "description": "Set the typing speed in milliseconds. Lower numbers mean faster typing (e.g., 50 for fast, 120 for normal).",
+        "default": "120"
+      },
+      "pause_time": {
+        "type": "text",
+        "label": "Pause Time (ms)",
+        "description": "How long to wait before deleting the word and typing the next one (e.g., 2000 = 2 seconds).",
+        "default": "2000"
+      },
+      "text_color": {
+        "type": "color-alpha",
+        "label": "Text Color",
+        "description": "Choose the color of the animated typewriter text.",
+        "default": "#333333"
       }
-  }   
+    }
+  }
 }
