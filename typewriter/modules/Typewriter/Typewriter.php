@@ -10,29 +10,33 @@ class Divi_Typewriter extends ET_Builder_Module {
     }
 
     public function get_fields() {
-        return array(
-            'words' => array(
-                'label'           => esc_html__( 'Words', 'divi-typewriter' ),
-                'type'            => 'textarea',
-                'option_category' => 'basic_option',
-            ),
-            'typing_speed' => array(
-                'label'           => esc_html__( 'Typing Speed', 'divi-typewriter' ),
-                'type'            => 'text',
-                'option_category' => 'basic_option',
-            ),
-            'pause_time' => array(
-                'label'           => esc_html__( 'Pause Time', 'divi-typewriter' ),
-                'type'            => 'text',
-                'option_category' => 'basic_option',
-            ),
-            'text_color' => array(
-                'label'           => esc_html__( 'Text Color', 'divi-typewriter' ),
-                'type'            => 'color-alpha',
-                'option_category' => 'configuration',
-            ),
-        );
-    }
+            return array(
+                'words' => array(
+                    'label'           => esc_html__( 'Words', 'divi-typewriter' ),
+                    'description'     => esc_html__( 'Enter the words you want to type out. Place each word or phrase on a new line.', 'divi-typewriter' ),
+                    'type'            => 'textarea',
+                    'option_category' => 'basic_option',
+                ),
+                'typing_speed' => array(
+                    'label'           => esc_html__( 'Typing Speed (ms)', 'divi-typewriter' ),
+                    'description'     => esc_html__( 'Set the typing speed in milliseconds. Lower numbers mean faster typing (e.g., 50 for fast, 120 for normal).', 'divi-typewriter' ),
+                    'type'            => 'text',
+                    'option_category' => 'basic_option',
+                ),
+                'pause_time' => array(
+                    'label'           => esc_html__( 'Pause Time (ms)', 'divi-typewriter' ),
+                    'description'     => esc_html__( 'How long to wait before deleting the word and typing the next one (e.g., 2000 = 2 seconds).', 'divi-typewriter' ),
+                    'type'            => 'text',
+                    'option_category' => 'basic_option',
+                ),
+                'text_color' => array(
+                    'label'           => esc_html__( 'Text Color', 'divi-typewriter' ),
+                    'description'     => esc_html__( 'Choose the color of the animated typewriter text.', 'divi-typewriter' ),
+                    'type'            => 'color-alpha',
+                    'option_category' => 'configuration',
+                ),
+            );
+        }
 
     /**
      * Server-side rendering (SSR)
