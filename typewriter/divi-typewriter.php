@@ -9,27 +9,32 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-require_once plugin_dir_path( __FILE__ ) . 'modules/Typewriter/Typewriter.php';
-
-add_action( 'divi_visual_builder_assets_before_enqueue_scripts', function() {
-    if ( class_exists( '\ET\Builder\VisualBuilder\Assets\PackageBuildManager' ) ) {
-        \ET\Builder\VisualBuilder\Assets\PackageBuildManager::register_package_build(
-            array(
-                'name'    => 'divi-typewriter-vb',
-                'version' => '1.0.0',
-                'script'  => array(
-                    'src'                => plugin_dir_url( __FILE__ ) . 'build/index.js',
-                    'deps'               => array(), // <-- APAGUE OS NOMES E DEIXE VAZIO!
-                    'enqueue_app_window' => true,
-                ),
-            )
-        );
+function divi_typewriter_register_extension() {
+    if ( ! class_exists( 'ET_Builder_Module' ) ) {
+        return;
     }
-});
 
-add_action( 'wp_enqueue_scripts', function() {
-    if ( ! is_admin() ) {
-        wp_enqueue_script( 'divi-typewriter-js', plugin_dir_url( __FILE__ ) . 'assets/js/typewriter.js', array(), '1.0', true );
-        wp_enqueue_style( 'divi-typewriter-css', plugin_dir_url( __FILE__ ) . 'assets/css/typewriter.css' );
+    require_once plugin_dir_path( __FILE__ ) . 'modules/Typewriter/Typewriter.php';
+    
+    $typewriter_module = new Divi_Typewriter();
+
+    if ( function_exists( 'et_builder_register_module' ) ) {
+        et_builder_register_module( $typewriter_module );
     }
-});
+}
+add_action( 'et_builder_ready', 'divi_typewriter_register_extension' );
+
+function divi_typewriter_vb_scripts() {
+    if ( ! function_exists( 'et_core_is_fb_enabled' ) || ! et_core_is_fb_enabled() ) {
+        return;
+    }
+
+    wp_enqueue_script(
+        'divi-typewriter-vb-script',
+        plugin_dir_url( __FILE__ ) . 'build/index.js',
+        array('jquery', 'react', 'react-dom'),
+        '1.0',
+        true
+    );
+}
+add_action( 'wp_enqueue_scripts', 'divi_typewriter_vb_scripts' );
