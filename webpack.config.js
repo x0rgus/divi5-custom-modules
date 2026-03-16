@@ -1,99 +1,23 @@
+const defaultConfig = require('@wordpress/scripts/config/webpack.config');
 const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
+  ...defaultConfig,
   entry: {
-    index: './src/index.js',
+    index: path.resolve(__dirname, 'src/index.js'),
   },
   output: {
-    filename: '[name].js',
     path: path.resolve(__dirname, 'typewriter/build'),
+    filename: '[name].js',
   },
+  // Divi externals
   externals: {
-    jquery: 'jQuery',
-    underscore: '_',
-    lodash: 'lodash',
-    react: ['vendor', 'React'],
-    'react-dom': ['vendor', 'ReactDOM'],
-    '@wordpress/i18n': ['vendor', 'wp', 'i18n'],
-    '@wordpress/hooks': ['vendor', 'wp', 'hooks'],
-    '@divi/rest': ['divi', 'rest'],
-    '@divi/data': ['divi', 'data'],
-    '@divi/module': ['divi', 'module'],
-    '@divi/module-utils': ['divi', 'moduleUtils'],
-    '@divi/modal': ['divi', 'modal'],
-    '@divi/field-library': ['divi', 'fieldLibrary'],
-    '@divi/icon-library': ['divi', 'iconLibrary'],
-    '@divi/module-library': ['divi', 'moduleLibrary'],
-    '@divi/style-library': ['divi', 'styleLibrary'],
-  },
-  module: {
-    rules: [
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              compact: false,
-              presets: [
-                ['@babel/preset-env', { modules: false, targets: "> 5%" }],
-                '@babel/preset-react'
-              ],
-              plugins: [
-                '@babel/plugin-proposal-class-properties',
-              ],
-              cacheDirectory: false,
-            }
-          }
-        ]
-      },
-      {
-        test: /\.s?css$/i,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: {
-              url: false,
-              importLoaders: 2,
-            },
-          },
-          {
-            loader: 'sass-loader',
-            options: {},
-          },
-        ],
-      }
-    ]
-  },
-  optimization: {
-    splitChunks: {
-      cacheGroups: {
-        vb: {
-          type: 'css/mini-extract',
-          test: /[\\/]style(\.module)?\.(sc|sa|c)ss$/,
-          chunks: 'all',
-          enforce: true,
-          name(_, chunks, cacheGroupKey) {
-            const chunkName = chunks[0].name;
-            return `${path.dirname(chunkName)}/${cacheGroupKey}-${path.basename(chunkName)}`;
-          },
-        },
-        default: false,
-      },
-    },
-  },
-  plugins: [
-    new MiniCssExtractPlugin({
-      filename: '../assets/css/[name].css',
-    })
-  ],
-  resolve: {
-    extensions: ['.js', '.jsx', '.json'],
-  },
-  stats: {
-    errorDetails: true,
-  },
+    ...defaultConfig.externals,
+    '@divi/module': 'divi.module',
+    '@divi/events': 'divi.events',
+    '@divi/ajax': 'divi.ajax',
+    '@divi/serialization': 'divi.serialization',
+    'react': 'React',
+    'react-dom': 'ReactDOM'
+  }
 };
