@@ -50,7 +50,7 @@ class Divi_Typewriter extends ET_Builder_Module {
         $color = isset( $props['text_color'] ) ? (string) $props['text_color'] : '#333333';
 
         if ( ! is_admin() ) {
-            wp_enqueue_script( 'divi-typewriter-js', plugin_dir_url( __FILE__ ) . '../../assets/js/typewriter.js', array(), '1.0', true );
+            wp_enqueue_script( 'divi-typewriter-js', plugin_dir_url( __FILE__ ) . '../../assets/js/typewriter.js', [], '1.0', true );
             wp_enqueue_style( 'divi-typewriter-css', plugin_dir_url( __FILE__ ) . '../../assets/css/typewriter.css' );
         }
 
